@@ -18,8 +18,8 @@ class PerfomanceSearch extends Perfomance
     public function rules()
     {
         return [
-            [['perfomance_di', 'artist_id', 'place_id'], 'integer'],
-            [['name', 'date', 'perfomance_status'], 'safe'],
+            [['perfomance_di',], 'integer'],
+            [['name', 'date', 'perfomance_status','artist_id', 'place_id'], 'safe'],
         ];
     }
 
@@ -57,17 +57,20 @@ class PerfomanceSearch extends Perfomance
             return $dataProvider;
         }
 
+        $query->joinWith('artist');
+
         // grid filtering conditions
         $query->andFilterWhere([
             'perfomance_di' => $this->perfomance_di,
             'date' => $this->date,
-            'artist_id' => $this->artist_id,
+            //'artist_id' => $this->artist_id,
             'place_id' => $this->place_id,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'perfomance_status', $this->perfomance_status]);
-
+            ->andFilterWhere(['like', 'perfomance_status', $this->perfomance_status])
+			->andFilterWhere(['like', 'artist.first_name', $this->artist_id]);
+			//->andFilterWhere(['like', 'place.name', $this->place_id]);
         return $dataProvider;
     }
 }

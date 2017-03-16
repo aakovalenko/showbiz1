@@ -34,7 +34,7 @@ class Perfomance extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'artist_id', 'place_id', 'perfomance_status'], 'required'],
-            [['date','artist_id', 'place_id'], 'safe'],
+            [['date','artist_id', 'place_id', ], 'safe'],
            // [[], 'integer'],
             [['perfomance_status'], 'string'],
             [['name'], 'string', 'max' => 50],
@@ -55,7 +55,7 @@ class Perfomance extends \yii\db\ActiveRecord
             'artist_id' => Yii::t('app', 'Artist Name'),
             'place_id' => Yii::t('app', 'Place Name'),
 			//'alias' => Yii::t('app', 'Alias'),
-			'city' => Yii::t('app', 'City'),
+			//'city' => Yii::t('app', 'City'),
             'perfomance_status' => Yii::t('app', 'Perfomance Status'),
         ];
     }

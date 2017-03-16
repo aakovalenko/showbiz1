@@ -27,9 +27,21 @@ $this->params['breadcrumbs'][] = $this->title;
             //'perfomance_di',
             'name',
             'date',
-            'artist_id',
-            'place_id',
-            // 'perfomance_status',
+
+            //'artist_id',
+            [
+              'attribute' => 'artist_id',
+                'value' => 'artist.first_name'
+            ],
+
+            //'place_id',
+			[
+				'attribute' => 'place_id',
+				'value' => 'place.name'
+			],
+			//'alias',
+			//'city',
+            //'perfomance_status',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

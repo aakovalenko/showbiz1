@@ -66,7 +66,7 @@ class PerfomanceController extends Controller
         $model = new Perfomance();
 
         if ($model->load(Yii::$app->request->post() )) {
-        	$model->date = date('dd-M-yyyy');
+        	$model->date = date('d-m-Y');
         	$model->save();
             return $this->redirect(['view', 'id' => $model->perfomance_di]);
         } else {
