@@ -8,6 +8,7 @@ use backend\models\PerfomanceSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 
 /**
  * PerfomanceController implements the CRUD actions for Perfomance model.
@@ -63,17 +64,23 @@ class PerfomanceController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Perfomance();
+    	if(Yii::$app->user->can( 'create perfomance'))
+		{
+			$model = new Perfomance();
 
-        if ($model->load(Yii::$app->request->post() )) {
-        	$model->date = date('d-m-Y');
-        	$model->save();
-            return $this->redirect(['view', 'id' => $model->perfomance_di]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+			if ($model->load(Yii::$app->request->post() )) {
+				$model->date = date('d-m-yyyy');
+				$model->save();
+				return $this->redirect(['view', 'id' => $model->perfomance_di]);
+			} else {
+				return $this->render('create', [
+					'model' => $model,
+				]);
+			}
+		}else{
+    		throw new ForbiddenHttpException;
+		}
+
     }
 
     /**

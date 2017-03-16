@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\PerfomanceSearch */
@@ -26,7 +27,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'perfomance_di',
             'name',
-            'date',
+            [
+				'attribute' => 'date',
+				'value' => 'date',
+                'format' => 'raw',
+                'filter' => DatePicker::widget([
+					'model' => $searchModel,
+					'attribute' => 'date',
+					'clientOptions' => [
+						'autoclose' => true,
+						'format' => 'yyyy-mm-dd'
+                        ]
+					])
+            ],
 
             //'artist_id',
             [
@@ -39,8 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute' => 'place_id',
 				'value' => 'place.name'
 			],
-			//'alias',
-			//'city',
+
             //'perfomance_status',
 
             ['class' => 'yii\grid\ActionColumn'],

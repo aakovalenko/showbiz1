@@ -8,6 +8,7 @@ use backend\models\ArtistSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 
 /**
  * ArtistController implements the CRUD actions for Artist model.
@@ -63,15 +64,22 @@ class ArtistController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Artist();
+    	if(Yii::$app->user->can('create artist'))
+		{
+			$model = new Artist();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->artist_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['view', 'id' => $model->artist_id]);
+			} else {
+				return $this->render('create', [
+					'model' => $model,
+				]);
+			}
+		}else
+			{
+				throw new ForbiddenHttpException;
+			}
+
     }
 
     /**
